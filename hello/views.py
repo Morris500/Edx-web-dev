@@ -11,5 +11,16 @@ def hello(request):
 
 def greet(req):
     return render(req, "greet.html", 
-        
-                              )
+            )
+
+def todolist(req):
+    tasks = ["pray", "gym", "work"]
+    return render(req, "todolist.html", {"task": tasks})
+
+def add(req):
+    if req.method == "POST":
+        print(req.POST)
+    return render(req, "add.html" )
+    
+    
+

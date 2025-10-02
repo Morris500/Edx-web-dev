@@ -22,7 +22,7 @@ from newyear import urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("newyear/", include("hello.urls")),
-    path("", include("newyear.urls")),
+    path("", include("hello.urls")),
+    path("newyear/", include("newyear.urls")),
 ]
 

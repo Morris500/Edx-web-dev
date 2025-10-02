@@ -1,0 +1,12 @@
+{% extends "layout.html"%}
+
+{%block body%}
+<h1>Add Task</h1>
+<form action="{% url 'add' %}" method="post">
+    {% csrf_token %} 
+    <!-- the crsf is a django security protocol that must be used when posting a form  -->
+    <input type="text" name="task">
+    <input type="submit">
+</form>
+<a href="{% url 'todolist' %}">View Lists</a>
+{%endblock%}
