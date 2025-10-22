@@ -4,6 +4,11 @@ from .models import flight
 
 # Create your views here.
 def index(req):
-    return render (req, "index.html", {"flight": flight.objects.all()
-    
+    return render (req, "index.html", {"flights": flight.objects.all()
+     
     }) 
+
+def Flight(req, flight_id):
+    Flight = flight.objects.get(pk=flight_id)
+    print(Flight)
+    return render (req, "flight.html", {"flights": Flight } )
