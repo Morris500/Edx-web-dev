@@ -22,6 +22,7 @@ from flights import urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", include("flights.urls"))
+    path("", include("flights.urls")),
+    path("users/", include("users.urls"))
 ]
  
