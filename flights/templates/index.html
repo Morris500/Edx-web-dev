@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<h1>Flights</h1>
+<ul>
+    {% for flight in flights %}
+    <li>Flight {{flight.id}}: {{flight.orgin }}to {{flight.destination }}</li>
+    {% endfor %}
+    
+</ul>  
+<ol>
+    <li>
+        {{flights}}
+    </li>
+</ol>
+{% endblock %}
