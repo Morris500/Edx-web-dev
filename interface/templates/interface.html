@@ -1,0 +1,65 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>interface</h1>
+    <div>
+        <button value="1">Section 1</button>
+        <button value="2">section 2</button>
+        <button value="3">section 3</button>
+    </div>
+    <div>
+        {% for data in datas %}
+    <li>{{data}}</li>
+    {% endfor %}
+
+    </div>
+
+   <h2></h2>
+
+<script>
+    document.querySelectorAll("button").forEach((button) => {
+        button.onclick = (event) => {
+            let dataToSend = event.target.value;
+            console.log(dataToSend);
+         
+            getcookie = (name) => {
+                let cookievalue = null;
+                if(document.cookies && document.cookie !== ''){
+                    const cookies =document.cookie.spilt(';');
+                    cookies.length.forEach(cookies => {
+                        const cookie = cookies.trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')){
+                            cookievalue = decodeURIComponent(cookie.substring(name.length + 1));
+                            
+
+                        }
+                    })
+                }
+                return cookievalue;   
+            }
+            const csrftoken = getcookie('csrftoken');
+
+         fetch('http://127.0.0.1:8000/interface/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrftoken
+            },
+            body: JSON.stringify(dataToSend)
+        })
+        .then(response => response.json())
+        .then(data => console.log('Success:', data))
+        .catch(error => console.error('Error:', error));
+            
+        }
+})
+        
+</script>
+
+</body>
+</html>

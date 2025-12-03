@@ -18,11 +18,12 @@ from django.contrib import admin
 from django.urls import include, path
 
 from flights import urls
-
+from interface import urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("flights.urls")),
-    path("users/", include("users.urls"))
+    path("users/", include("users.urls")),
+    path("interface/", include("interface.urls"))
 ]
  
