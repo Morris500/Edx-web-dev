@@ -8,57 +8,70 @@
 <body>
     <h1>interface</h1>
     <div>
-        <button value="1">Section 1</button>
-        <button value="2">section 2</button>
-        <button value="3">section 3</button>
+        <button value="0">Section 1</button>
+        <button value="1">section 2</button>
+        <button value="2">section 3</button>
     </div>
     <div>
-        {% for data in datas %}
-    <li>{{data}}</li>
-    {% endfor %}
-
+       
+        <h3></h3>   
+        
     </div>
 
-   <h2></h2>
+   <h2>
+    {{ datas }}
+   </h2>
 
 <script>
-    document.querySelectorAll("button").forEach((button) => {
-        button.onclick = (event) => {
-            let dataToSend = event.target.value;
-            console.log(dataToSend);
-         
-            getcookie = (name) => {
-                let cookievalue = null;
-                if(document.cookies && document.cookie !== ''){
-                    const cookies =document.cookie.spilt(';');
-                    cookies.length.forEach(cookies => {
-                        const cookie = cookies.trim();
-                        if (cookie.substring(0, name.length + 1) === (name + '=')){
-                            cookievalue = decodeURIComponent(cookie.substring(name.length + 1));
-                            
-
-                        }
-                    })
-                }
-                return cookievalue;   
+   
+        function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
             }
-            const csrftoken = getcookie('csrftoken');
+        }
+    }
+    return cookieValue;
+}
+document.addEventListener('DOMContentLoaded', ()=> {
+    if (document.querySelector("h3").innerHTML.length === 0) {
 
-         fetch('http://127.0.0.1:8000/interface/', {
+        document.querySelector("h3").innerHTML = "click on any button"
+        }
+})
+document.querySelectorAll("button").forEach((button) => {
+    button.onclick = (event) => {
+        let dataToSend = { value: event.target.value }; // send as object
+
+        const csrftoken = getCookie('csrftoken');
+
+        fetch('http://127.0.0.1:8000/interface/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': csrftoken
+                'X-CSRFToken': csrftoken   // ✅ correct header name
             },
             body: JSON.stringify(dataToSend)
         })
         .then(response => response.json())
-        .then(data => console.log('Success:', data))
-        .catch(error => console.error('Error:', error));
-            
-        }
-})
+        .then(data => {
+        let message = document.querySelector("h3")
         
+             message.innerHTML = data.received
+             console.log(message);
+             
+
+    }
+    )
+        .catch(error => console.error('Error:', error));
+    }
+});
+
 </script>
 
 </body>
